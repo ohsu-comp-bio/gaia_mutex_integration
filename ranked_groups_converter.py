@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
 # example bash command:
-# python ranked_groups_converter.py -rg ranked-groups.txt -outfile OUTOUT.txt
+# python ranked_groups_converter.py -rg ranked-groups.txt -outfile rg_json_messages.txt
 
 import argparse
 import google.protobuf.json_format
 import AlterationGroupSchema_pb2    # Can I make this a parameter using argparse?
 
 # allow use of command line arguments for input and output files
-parser=argparse.ArgumentParser()
+parser = argparse.ArgumentParser()
 parser.add_argument("-rg")      # The ranked groups file to be converted
 parser.add_argument("-outfile") # The desired name of the outfile (json messages)
 args = parser.parse_args()
