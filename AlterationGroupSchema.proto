@@ -5,7 +5,3 @@ message AlterationGroup {
 	float q = 2;
 	repeated string members = 3;
 }
-
-message Alterations {
-    repeated AlterationGroup groups = 1;
-}

@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='AlterationGroupSchema.proto',
   package='',
   syntax='proto3',
-  serialized_pb=_b('\n\x1b\x41lterationGroupSchema.proto\"<\n\x0f\x41lterationGroup\x12\r\n\x05score\x18\x01 \x01(\x02\x12\t\n\x01q\x18\x02 \x01(\x02\x12\x0f\n\x07members\x18\x03 \x03(\t\"/\n\x0b\x41lterations\x12 \n\x06groups\x18\x01 \x03(\x0b\x32\x10.AlterationGroupb\x06proto3')
+  serialized_pb=_b('\n\x1b\x41lterationGroupSchema.proto\"<\n\x0f\x41lterationGroup\x12\r\n\x05score\x18\x01 \x01(\x02\x12\t\n\x01q\x18\x02 \x01(\x02\x12\x0f\n\x07members\x18\x03 \x03(\tb\x06proto3')
 )
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -70,40 +70,7 @@ _ALTERATIONGROUP = _descriptor.Descriptor(
   serialized_end=91,
 )
 
-
-_ALTERATIONS = _descriptor.Descriptor(
-  name='Alterations',
-  full_name='Alterations',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='groups', full_name='Alterations.groups', index=0,
-      number=1, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=93,
-  serialized_end=140,
-)
-
-_ALTERATIONS.fields_by_name['groups'].message_type = _ALTERATIONGROUP
 DESCRIPTOR.message_types_by_name['AlterationGroup'] = _ALTERATIONGROUP
-DESCRIPTOR.message_types_by_name['Alterations'] = _ALTERATIONS
 
 AlterationGroup = _reflection.GeneratedProtocolMessageType('AlterationGroup', (_message.Message,), dict(
   DESCRIPTOR = _ALTERATIONGROUP,
@@ -111,13 +78,6 @@ AlterationGroup = _reflection.GeneratedProtocolMessageType('AlterationGroup', (_
   # @@protoc_insertion_point(class_scope:AlterationGroup)
   ))
 _sym_db.RegisterMessage(AlterationGroup)
-
-Alterations = _reflection.GeneratedProtocolMessageType('Alterations', (_message.Message,), dict(
-  DESCRIPTOR = _ALTERATIONS,
-  __module__ = 'AlterationGroupSchema_pb2'
-  # @@protoc_insertion_point(class_scope:Alterations)
-  ))
-_sym_db.RegisterMessage(Alterations)
 
 
 # @@protoc_insertion_point(module_scope)

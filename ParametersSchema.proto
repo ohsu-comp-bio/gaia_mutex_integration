@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+message Params {
+    string searchon_signet = 1;
+    string network = 2;
+    int32 randit_lv1 = 3;
+    int32 randit_lv2 = 4;
+    int32 max_grp_size = 5;
+    float fdr_cutoff = 6;
+    string matrix = 7;
+    int32 gene_lim = 8;
+    string ranked_genes = 9;
+}
