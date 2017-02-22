@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+# This script converts ranked-groups.txt (output by Mutex) into json messages
+
 # example bash command:
 # python ranked_groups_converter.py -rg ranked-groups.txt -outfile rg_json_messages.txt
 
