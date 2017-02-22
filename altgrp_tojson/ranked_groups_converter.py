@@ -24,7 +24,7 @@ count = 0
 altgroups = []
 
 # convert input file lines into json objects
-# prepare for possibility that q-val column is not present in input file
+# allow for possibility that q-val column is not present in input file
 for line in in_fh:
     line = line.strip('\n')
     parts = line.split('\t')
