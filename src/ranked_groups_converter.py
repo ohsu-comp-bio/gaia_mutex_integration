@@ -11,39 +11,42 @@ parser.add_argument("-outfile") # The desired name of the outfile (json messages
 args = parser.parse_args()
 
 in_file = args.rg
-in_fh = open(in_file, "r")
-
-count = 0
-altgroups = []
-
-# convert input file lines into json objects
-# allow for possibility that q-val column is not present in input file
-for line in in_fh:
-    line = line.strip('\n')
-    parts = line.split('\t')
-    if count == 0:
-        if parts[1] == "q-val":
-            qexists = True
-        else:
-            qexists = False
-    else:
-        ag = AlterationGroupSchema_pb2.AlterationGroup()
-        ag.score = float(parts[0])
-        if qexists:
-            ag.q = float(parts[1])
-            ag.members.extend(parts[2:])
-        else:
-            ag.members.extend(parts[1:])
-        altgroups.append(ag)
-    count += 1
-
-in_fh.close()
 out_file = args.outfile
-out_fh = open(out_file, "w")
 
-# write to file with 1 json message per line
-for i in altgroups:
-    json_string = google.protobuf.json_format.MessageToJson(i).replace('\n','') + '\n'
-    out_fh.write("%s" % json_string)
+def convert_rg_to_json(infile):
+    in_fh = open(infile, "r")
+    count = 0
+    altgroups = []
+    for line in in_fh:
+        line = line.strip('\n')
+        parts = line.split('\t')
+        # allow for possibility that q-val column is not present in input file
+        if count == 0:
+            if parts[1] == "q-val":
+                qexists = True
+            else:
+                qexists = False
+        else:
+            ag = AlterationGroupSchema_pb2.AlterationGroup()
+            ag.score = float(parts[0])
+            if qexists:
+                ag.q = float(parts[1])
+                ag.members.extend(parts[2:])
+            else:
+                ag.members.extend(parts[1:])
+            altgroups.append(ag)
+        count += 1
+    in_fh.close()
+    return altgroups
 
-out_fh.close()
+def write_out_json(outfile, altg):
+    out_fh = open(outfile, "w")
+    # write to file with 1 json message per line
+    for i in altg:
+        json_string = google.protobuf.json_format.MessageToJson(i).replace('\n','') + '\n'
+        out_fh.write("%s" % json_string)
+    out_fh.close()
+
+if __name__ == '__main__':
+    rg_json = convert_rg_to_json(in_file)
+    write_out_json(out_file, rg_json)
