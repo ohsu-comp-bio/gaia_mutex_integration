@@ -1,7 +1,0 @@
-syntax = "proto3";
-
-message AlterationGroup {
-	float score = 1;
-	float q = 2;
-	repeated string members = 3;
-}
