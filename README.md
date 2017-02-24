@@ -7,7 +7,7 @@ The files in this repository use python 3 and Google's protocol buffers to conve
 Gaia is a Tinkerpop-based engine for gathering and analyzing biomedical data as graphs. It receives and outputs information organized into JSON messages. The Mutex algorithm utilizes mutual exclusivity of genomic alterations to identify signaling pathways involved in carcinogenesis. The goal of this project is to provide resources to automatically convert Mutex input and output into JSON messages for the purpose of communication with the Gaia platform.
 
 Gaia: https://github.com/bmeg/gaia  
-Mutex: https://github.com/PathwayAndDataAnalysis/mutex
+Mutex: https://github.com/PathwayAndDataAnalysis/mutex  
 Mutex publication: https://genomebiology.biomedcentral.com/articles/10.1186/s13059-015-0612-6
 
 ## Files for Mutex input:
