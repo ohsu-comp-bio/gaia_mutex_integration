@@ -74,7 +74,7 @@ def assign_all_to_mrm(outfl,mrmessage,dmmatrix):
     outfh.write(mrm_json)
     outfh.close()
 
-if __name__ = '__main__':
+if __name__ == '__main__':
     mrm = assign_param_to_pb(p_infile,mrm)
     dmm = assign_matrix_to_pb(m_infile,dmv,dmm)
     assign_all_to_mrm(outfile,mrm,dmm)

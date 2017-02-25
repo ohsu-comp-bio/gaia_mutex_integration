@@ -31,12 +31,12 @@ An example MRM is provided: test/MRM_DEVEL.txt.
   
 Or use MRM_Maker.py to generate a MRM from new parameters.txt and DataMatrix.txt files with the bash command:  
   
-$ python MRM_Maker.py -inparam parameters.txt -inmat DataMatrix.txt -outf MRM.txt
+$ python3 MRM_Maker.py -inparam parameters.txt -inmat DataMatrix.txt -outf MRM.txt
 
 ## Converting a MRM to be received by Mutex:
 Example bash command:  
   
-$ python MRM_Converter.py -mrm MRM.txt
+$ python3 MRM_Converter.py -mrm MRM.txt
   
 Relevant files:  
 
@@ -58,7 +58,7 @@ DataMatrix.txt, parameters.txt, and (after Mutex concludes) ranked-groups.txt wi
 ## Converting Mutex output file (ranked-groups.txt):
 Example bash command:  
   
-$ python ranked_groups_converter.py -rg ranked-groups.txt -outfile ranked-groups.json  
+$ python3 ranked_groups_converter.py -rg ranked-groups.txt -outfile ranked-groups.json  
   
 Relevant files:  
   
