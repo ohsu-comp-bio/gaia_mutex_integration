@@ -3,31 +3,77 @@
 #Not yet finished (obvi)
 
 import subprocess
+import os
 
 def test_mrm_maker():
     print("Testing MRM_Maker.py")
-    subprocess.run(["python3", "../src/MRM_Maker.py", "-inparam", "pretest/parameters.txt", "-inmat", "pretest/DataMatrix.txt", "-outf", "testout_MRM.json"])
+    subprocess.run(["python3", "../src/MRM_Maker.py", "-inparam", "pretest/parameters.txt",
+                    "-inmat", "pretest/DataMatrix.txt", "-outf", "testout_MRM.json"])
 
-
-    def test_mrm():
+    def mrm_file_exists():
         if os.path.isfile("testout_MRM.json"):
             print("Mutex run message successfully created")
-            mrm = open("testout_MRM.json","r").readlines()
-            #close it. might have to change to old school format
-            if len(mrm) == 1:
-                print("Mutex run message is correct length (1line)")
-                #contains
-                #parameters and matrix
-                #values, headers, etc.
-            else:
-                print("Mutex run message is wrong length")
-                print("{}{}{}".format("Expected length: 1 line. Actual length: ", len(myfilelisty), " lines."))
-
+            return True
         else:
             print("Error: Failed to generate mutex run message")
+            return False
 
-    test_mrm()
-    print("MRM_Maker.py looks good")
+    def open_mrm_file():
+        mrm = open("testout_MRM.json", "r")
+        mrmlist = mrm.readlines()
+        mrm.close()
+        return mrmlist
+
+    def mrm_file_is_right_length(mrmlist):
+        if len(mrmlist) == 1:
+            print("Mutex run message is correct length (1 line)")
+            return True
+        else:
+            print("Mutex run message is incorrect length")
+            print("{}{}{}".format("Expected length: 1 line. Actual length: ", len(mrmlist), " lines."))
+            return False
+
+    def mrm_has_matrix_info(mrmlist):
+        mrmlist = mrmlist[0]
+
+        def check_labels():
+            if "label" in mrmlist:
+                print("MRM matrix rows have labels")
+            else:
+                print("MRM lacks matrix labels")
+
+        def check_values():
+            if "values" in mrmlist:
+                print("MRM matrix rows have values")
+            else:
+                print("MRM lacks matrix values")
+
+        def matrix_values_are_integers():
+
+
+
+
+        def all_matrix_rows_have_labels():
+
+        def matrix_header_right_format():
+        check_labels()
+        check_values()
+
+    def mrm_has_parameters_info():
+
+        def parameters_correct_format():
+
+    if mrm_file_exists():
+        mrm_rdlines = open_mrm_file()
+        mrm_file_is_right_length(mrm_rdlines)
+        mrm_has_matrix_info(mrm_rdlines)
+        mrm_has_parameters_info(mrm_rdlines)
+
+    if mrm_file_exists() & mrm_file_is_right_length() & mrm_has_matrix_info() & mrm_has_parameters_info():
+        print("MRM_Maker.py looks good")
+    else:
+        print("There were one or more errors with the mutex run message")
+        #and exit?
 
 def test_mrm_conv():
     print("Testing MRM_Converter.py")
@@ -64,7 +110,8 @@ def test_mrm_conv():
 
 def test_rg_conv():
     print("Testing ranked_groups_converter.py")
-    subprocess.run(["python3", "../src/ranked_groups_converter.py", "-rg", "sample-input/ranked-groups.txt", "-outfile", "ranked-groups.json"])
+    subprocess.run(["python3", "../src/ranked_groups_converter.py", "-rg", "sample-input/ranked-groups.txt",
+                    "-outfile", "ranked-groups.json"])
 
     def test_rg_json():
         if os.path.isfile("ranked-groups.json"):
