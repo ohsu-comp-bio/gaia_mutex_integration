@@ -1,0 +1,16 @@
+{  
+  "data_file": "/Users/strucka/Projects/gaia_mutex_integration/tests/resources/DataMatrix.txt",
+  "max_group_size": 5,
+  "first_level_random_iteration": 10000,
+  "first_level_random_iteration": 100,
+  "search_on_signaling_network": true,
+  "network_file": "/Users/strucka/Projects/gaia_mutex_integration/tests/resources/PC2v8.sif",
+  "genes_file": null,
+  "gene_ranking_file": "/Users/strucka/Projects/gaia_mutex_integration/tests/resources/RankedGenes.txt",
+  "gene_limit": null,
+  "score_cutoff": -1,
+  "fdr_cutoff": -1,
+  "sample_to_tissue_mapping_file": null, 
+  "minimum_alteration_count_threshold": null,
+  "randomize_data_matrix": false
+}

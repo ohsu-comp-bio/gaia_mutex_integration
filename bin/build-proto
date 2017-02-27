@@ -1,0 +1,4 @@
+#!/usr/bin/sh
+
+protoc -I=$(pwd)/schemas/ --python_out=$(pwd)/mutex_agent/ $(pwd)/schemas/MR.proto
+protoc -I=$(pwd)/schemas/ --python_out=$(pwd)/mutex_agent/ $(pwd)/schemas/AlterationGroupSchema.proto

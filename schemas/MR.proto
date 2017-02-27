@@ -1,16 +1,18 @@
 syntax = "proto3";
 
-message Vector {
-    repeated int32 values = 1;
-    string label = 2;
-}
-
-message Matrix {
-    repeated Vector rows = 1;
-    repeated string header = 2;
-}
-
 message MutexRun {
-    Matrix matrix = 1;
-    map<string,string> parameters = 2;
+    string data_file = 1;
+    int32 max_group_size = 2;
+    int32 first_level_random_iteration = 3;
+    int32 second_level_random_iteration = 4;
+    float fdr_cutoff = 5;
+    float score_cutoff = 6;
+    bool search_on_signaling_network = 7;
+    int32 minimum_alteration_count_threshold = 8;
+    int32 gene_limit = 9;
+    string genes_file = 10;
+    string gene_ranking_file = 11;
+    string network_file = 12;
+    string sample_to_tissue_mapping_file = 13;
+    bool randomize_data_matrix = 14;
 }

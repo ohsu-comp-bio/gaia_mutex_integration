@@ -1,7 +1,0 @@
-search-on-signaling-network = true
-network-file = ../resources/PC2v8.sif
-first-level-random-iteration = 10000
-max-group-size = 5
-data-file = DataMatrix.txt
-gene-limit = 500
-gene-ranking-file = ../resources/RankedGenes.txt
