@@ -1,5 +1,5 @@
 {  
-  "data_file": "/Users/strucka/Projects/gaia_mutex_integration/tests/resources/DataMatrix.txt",
+  "data_file": "/Users/strucka/Projects/gaia_mutex_integration/tests/resources/smallmatrix.txt",
   "max_group_size": 5,
   "first_level_random_iteration": 10000,
   "first_level_random_iteration": 100,

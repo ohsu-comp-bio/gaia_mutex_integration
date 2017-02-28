@@ -14,13 +14,7 @@ def formatTESMessage(params, storage_pre):
     cwd = os.path.dirname(os.path.realpath(__file__))
     task_message = {
         "name": "Mutex",
-        "inputs": [
-            {
-                "location": storage_pre + os.path.join(cwd, "create_AGM.py"),
-                "class": "File",
-                "path": "/mnt/create_AGM.py"
-            }
-        ],
+        "inputs": [],
         "outputs": [
             {
                 "location": storage_pre + os.path.join(cwd, "tests", "ranked_groups.txt"),
@@ -46,18 +40,16 @@ def formatTESMessage(params, storage_pre):
             {
                 "imageName": "opengenomics/mutex:v1.0",
                 "cmd": [
-                    "python",
-                    "/home/mutex.py"
+                    "mutex.py"
                 ],
                 "workdir": "/mnt",
                 "stdout": "stdout",
                 "stderr": "stderr",
             },
             {
-                "imageName": "opengenomics/mutex:v1.0",
+                "imageName": "mutex_agent:v0.1",
                 "cmd": [
-                    "python",
-                    "/mnt/create-AGM.py",
+                    "create_AGM.py",
                     "--ranked-groups", "/mnt/ranked-groups.txt",
                     "--outfile", "/mnt/AGM.json"
                 ],

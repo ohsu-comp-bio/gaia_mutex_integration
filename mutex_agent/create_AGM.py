@@ -49,8 +49,10 @@ if __name__ == '__main__':
     # allow use of command line arguments for input and output files
     parser = argparse.ArgumentParser()
     parser.add_argument("-ranked-groups", "-r",
+                        required=True,
                         help="The ranked groups file to be converted")
     parser.add_argument("--outfile", "-o",
+                        required=True,
                         help="The desired name of the outfile (json messages)")
     args = parser.parse_args()
 
