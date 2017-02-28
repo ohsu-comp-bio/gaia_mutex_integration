@@ -7,7 +7,7 @@ import json
 import os
 import requests
 
-from mutex_agent.parse_MRM import loadMessage, validateMessage
+import parse_MRM
 
 
 def formatTESMessage(params, storage_pre):
@@ -121,8 +121,8 @@ if __name__ == '__main__':
     parser.add_argument("message")
     args = parser.parse_args()
 
-    msg = loadMessage(args.message)
-    if validateMessage(msg):
+    msg = parse_MRM.loadMessage(args.message)
+    if parse_MRM.validateMessage(msg):
 
         if args.mode == "tes":
             tes_message = formatTESMessage(msg, "file://")

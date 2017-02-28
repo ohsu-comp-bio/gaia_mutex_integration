@@ -5,7 +5,7 @@ from __future__ import print_function
 import argparse
 import google.protobuf.json_format
 
-from mutex_agent import AlterationGroupSchema_pb2
+import AlterationGroupSchema_pb2
 
 
 def convert_rg_to_json(infile):

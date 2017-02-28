@@ -6,7 +6,7 @@ import json
 import google.protobuf.json_format
 import os
 
-from mutex_agent import MR_pb2
+import MR_pb2
 
 
 def loadMessage(message):
