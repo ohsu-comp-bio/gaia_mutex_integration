@@ -4,11 +4,15 @@
 
 import subprocess
 import os
+import MR_pb2
+import AlterationGroupSchema_pb2
+import google.protobuf.json_format
+
 
 def test_mrm_maker():
     print("Testing MRM_Maker.py")
     subprocess.run(["python3", "../src/MRM_Maker.py", "-inparam", "pretest/parameters.txt",
-                    "-inmat", "pretest/DataMatrix.txt", "-outf", "testout_MRM.json"])
+                    "-inmat", "pretest/DataMatllrix.txt", "-outf", "testout_MRM.json"])
 
     def mrm_file_exists():
         if os.path.isfile("testout_MRM.json"):
@@ -33,35 +37,77 @@ def test_mrm_maker():
             print("{}{}{}".format("Expected length: 1 line. Actual length: ", len(mrmlist), " lines."))
             return False
 
-    def mrm_has_matrix_info(mrmlist):
-        mrmlist = mrmlist[0]
+    def mrm_has_matrix_info(mrm_pbo):
 
-        def check_labels():
+        def check_header(mrm_pbo):
+            if len(mrm_pbo.matrix.header) > 0:
+                print("MRM matrix has header")
+                if mrm_pbo.matrix.header[0] != '':
+                    print("Header lacks initial blank space. Column titles may be offset.")
+
+                header_comment = "Column titles exist"
+                for i in mrm_protobuf_object.matrix.header[1:]:
+                    if len(i) == 0:
+                        header_comment = "Error: At least one column title (sample) is of length 0."
+                print(header_comment)
+
+            else:
+                print("MRM matrix lacks header")
+
+        def check_rows(mrm_pbo):
+            if len(mrm_pbo.matrix.rows) > 0:
+                print("MRM matrix has rows")
+                labellist = []
+                valuelist = []
+                for i in mrm_pbo.rows:
+                    labellist.append(i.label)
+                    valuelist.append(i.values)
+                if len()
+
+            else:
+                print("MRM matrix does not have rows")
+
+
+
+        def check_labels(mrmlist):
             if "label" in mrmlist:
                 print("MRM matrix rows have labels")
             else:
                 print("MRM lacks matrix labels")
 
-        def check_values():
+        def check_values(mrmlist):
             if "values" in mrmlist:
                 print("MRM matrix rows have values")
             else:
                 print("MRM lacks matrix values")
 
-        def matrix_values_are_integers():
-
-
-
+        def matrix_values_are_integers(mrmlist):
 
         def all_matrix_rows_have_labels():
 
         def matrix_header_right_format():
-        check_labels()
-        check_values()
+
+        #commands for just matrix having right info
+        check_header(mrm_pbo)
+        check_rows(mrm_pbo)
+        check_labels(mrm_pbo)
+        check_values(mrm_pbo)
+
+    #OVERARCHING MRM MATRIX COMMANDS
+    if mrm_file_exists():
+        mrmlist = open_mrm_file()
+        if mrm_file_is_right_length(mrmlist):
+            mrmlist = mrmlist[0]
+            mrm_protobuf_object = google.protobuf.json_format.Parse(mrmlist[0], MR_pb2.MutexRun())
+            mrm_has_matrix_info(mrm_protobuf_object)
 
     def mrm_has_parameters_info():
 
         def parameters_correct_format():
+
+
+
+
 
     if mrm_file_exists():
         mrm_rdlines = open_mrm_file()
@@ -74,6 +120,22 @@ def test_mrm_maker():
     else:
         print("There were one or more errors with the mutex run message")
         #and exit?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 def test_mrm_conv():
     print("Testing MRM_Converter.py")
