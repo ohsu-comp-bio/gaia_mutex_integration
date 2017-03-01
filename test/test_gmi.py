@@ -1,15 +1,18 @@
 #!/usr/bin/env python3
 
-#Not yet finished (obvi)
+#Not yet finished!
 
 import subprocess
 import os
+import sys
+src_path = os.path.abspath(os.path.join('..', 'src'))
+sys.path.append(src_path)
 import MR_pb2
 import AlterationGroupSchema_pb2
 import google.protobuf.json_format
 
-
 def test_mrm_maker():
+
     print("Testing MRM_Maker.py")
     subprocess.run(["python3", "../src/MRM_Maker.py", "-inparam", "pretest/parameters.txt",
                     "-inmat", "pretest/DataMatllrix.txt", "-outf", "testout_MRM.json"])
@@ -33,7 +36,7 @@ def test_mrm_maker():
             print("Mutex run message is correct length (1 line)")
             return True
         else:
-            print("Mutex run message is incorrect length")
+            print("Error: Mutex run message is incorrect length")
             print("{}{}{}".format("Expected length: 1 line. Actual length: ", len(mrmlist), " lines."))
             return False
 
@@ -42,100 +45,138 @@ def test_mrm_maker():
         def check_header(mrm_pbo):
             if len(mrm_pbo.matrix.header) > 0:
                 print("MRM matrix has header")
-                if mrm_pbo.matrix.header[0] != '':
-                    print("Header lacks initial blank space. Column titles may be offset.")
+                passed_test = True
 
+                if mrm_pbo.matrix.header[0] != '':
+                    print("Error: Header lacks initial blank space. Column titles may be offset.")
+                    passed_test = False
                 header_comment = "Column titles exist"
-                for i in mrm_protobuf_object.matrix.header[1:]:
+
+                for i in mrm_pbo.matrix.header[1:]:
                     if len(i) == 0:
                         header_comment = "Error: At least one column title (sample) is of length 0."
+                        passed_test = False
                 print(header_comment)
 
             else:
-                print("MRM matrix lacks header")
+                print("Error: MRM matrix lacks header")
+                passed_test = False
+
+            return passed_test
 
         def check_rows(mrm_pbo):
             if len(mrm_pbo.matrix.rows) > 0:
                 print("MRM matrix has rows")
-                labellist = []
-                valuelist = []
-                for i in mrm_pbo.rows:
-                    labellist.append(i.label)
-                    valuelist.append(i.values)
-                if len()
-
+                passed_test = True
             else:
-                print("MRM matrix does not have rows")
+                print("Error: MRM matrix does not have rows")
+                passed_test = False
 
+            return passed_test
 
+        def check_row_labels(mrm_pbo):
 
-        def check_labels(mrmlist):
-            if "label" in mrmlist:
-                print("MRM matrix rows have labels")
-            else:
-                print("MRM lacks matrix labels")
+            count = 0
+            unlabeled_count = 0
 
-        def check_values(mrmlist):
-            if "values" in mrmlist:
-                print("MRM matrix rows have values")
-            else:
-                print("MRM lacks matrix values")
+            for i in mrm_pbo.matrix.rows:
+                if len(i.label) == 0:
+                    unlabeled_count += 1
+                count += 1
+            if count > 0 and unlabeled_count == 0:
+                print("All MRM matrix rows have labels")
+                passed_test = True
+            elif count > 0 and unlabeled_count > 0:
+                print("Error", unlabeled_count, "out of", count, "rows lack labels")
+                passed_test = False
+            elif count == 0:
+                print("Error: Failed to iterate through matrix rows")
+                passed_test = False
 
-        def matrix_values_are_integers(mrmlist):
+            return passed_test
 
-        def all_matrix_rows_have_labels():
+        def check_row_values(mrm_pbo):
 
-        def matrix_header_right_format():
+            count = 0
+            non_integers_count = 0
+
+            for i in mrm_pbo.matrix.rows:
+                for value in i.values:
+                    if type(value) != int:
+                        non_integers_count += 1
+                    count += 1
+
+            if count > 0 and non_integers_count == 0:
+                print("All MRM matrix values are integers")
+                passed_test = True
+            elif count > 0 and non_integers_count > 0:
+                print("Error:", non_integers_count, "MRM matrix values are not integer type")
+                passed_test = False
+            elif count == 0:
+                print("Error: Failed to iterate through MRM matrix values")
+                passed_test = False
 
         #commands for just matrix having right info
-        check_header(mrm_pbo)
-        check_rows(mrm_pbo)
-        check_labels(mrm_pbo)
-        check_values(mrm_pbo)
+        header_looks_good = check_header(mrm_pbo)
+        rows_look_good = check_rows(mrm_pbo)
+        labels_look_good = check_row_labels(mrm_pbo)
+        values_look_good = check_row_values(mrm_pbo)
 
-    #OVERARCHING MRM MATRIX COMMANDS
+        if header_looks_good & rows_look_good & labels_look_good & values_look_good:
+            return True
+        else:
+            return False
+
+    def mrm_has_parameters_info(mrm_pbo):
+
+        count = 0
+        nonstring_count = 0
+        key_contains_equal_sign = 0
+        value_contains_equal_sign = 0
+
+        for key in mrm_pbo.parameters:
+            if type(key) or type(mrm_pbo.parameters[key]) != str:
+                nonstring_count += 1
+            count += 1
+            if "=" in key:
+                key_contains_equal_sign += 1
+            if "=" in mrm_pbo.parameters[key]:
+                value_contains_equal_sign += 1
+
+        if count > 0 and nonstring_count == 0:
+            print("All MRM parameters key and value objects are strings")
+            passed_test = True
+            if key_contains_equal_sign or value_contains_equal_sign > 0:
+                print("Error: MRM parameters message incorporated '=' instead of key or value")
+                print(key_contains_equal_sign, "'=' error(s) out of", count, "parameters keys")
+                print(value_contains_equal_sign, "'=' error(s) out of", count, "parameters values")
+                passed_test = False
+
+        elif count > 0 and nonstring_count > 0:
+            print("Error:", nonstring_count, "MRM parameters key-value pairs contain non-strings")
+            passed_test = False
+
+        elif count == 0:
+            print("Error: Failed to iterate through MRM parameters key-value pairs")
+            passed_test = False
+
+        return passed_test
+
     if mrm_file_exists():
+        mrmfe = True
         mrmlist = open_mrm_file()
         if mrm_file_is_right_length(mrmlist):
+            mrmfrl = True
             mrmlist = mrmlist[0]
             mrm_protobuf_object = google.protobuf.json_format.Parse(mrmlist[0], MR_pb2.MutexRun())
-            mrm_has_matrix_info(mrm_protobuf_object)
 
-    def mrm_has_parameters_info():
+            matrix_looks_good = mrm_has_matrix_info(mrm_protobuf_object)
+            parameters_look_good = mrm_has_parameters_info(mrm_protobuf_object)
 
-        def parameters_correct_format():
-
-
-
-
-
-    if mrm_file_exists():
-        mrm_rdlines = open_mrm_file()
-        mrm_file_is_right_length(mrm_rdlines)
-        mrm_has_matrix_info(mrm_rdlines)
-        mrm_has_parameters_info(mrm_rdlines)
-
-    if mrm_file_exists() & mrm_file_is_right_length() & mrm_has_matrix_info() & mrm_has_parameters_info():
-        print("MRM_Maker.py looks good")
+    if mrmfe & mrmfrl & matrix_looks_good & parameters_look_good:
+        print("No errors were detected in the mutex run message generated by MRM_Maker.py")
     else:
-        print("There were one or more errors with the mutex run message")
-        #and exit?
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        print("There were one or more errors in the mutex run message generated by MRM_Maker.py")
 
 def test_mrm_conv():
     print("Testing MRM_Converter.py")
@@ -167,8 +208,9 @@ def test_mrm_conv():
     test_param()
     test_rg()
 
-    #if no issues, print this; otherwise print something sad.
+    # if no issues, print this; otherwise print something sad.
     print("MRM_Converter.py looks good")
+
 
 def test_rg_conv():
     print("Testing ranked_groups_converter.py")
@@ -190,3 +232,30 @@ if __name__ == '__main__':
     test_rg_conv()
 
 # write code to clean up after itself (maybe prompt the user to proceed with this step?)
+
+'''
+def cleanup():
+    while True:
+        try:
+            x = str(input("Would you like me to clean up this mess? [y/n]"))
+            break
+        except ValueError:
+            print("Try entering y or n")
+'''
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
