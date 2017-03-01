@@ -5,7 +5,7 @@ from __future__ import print_function
 import argparse
 import google.protobuf.json_format
 
-import AlterationGroupSchema_pb2
+from . import AlterationGroupSchema_pb2
 
 
 def convert_rg_to_json(infile):
@@ -45,7 +45,7 @@ def write_out_json(outfile, altg):
     out_fh.close()
 
 
-if __name__ == '__main__':
+def main():
     # allow use of command line arguments for input and output files
     parser = argparse.ArgumentParser()
     parser.add_argument("-ranked-groups", "-r",

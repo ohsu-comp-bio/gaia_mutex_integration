@@ -7,7 +7,7 @@ import json
 import os
 import requests
 
-import parse_MRM
+from . import parse_MRM
 
 
 def formatTESMessage(params, storage_pre):
@@ -100,7 +100,7 @@ def post_task(message, endpoint):
     return response
 
 
-if __name__ == '__main__':
+def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--mode", "-m",
                         default="tes",

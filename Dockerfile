@@ -1,8 +1,7 @@
 from python:2.7.13
 
-COPY ./requirements.txt /tmp/
-RUN pip install -r /tmp/requirements.txt
-COPY ./mutex_agent/* /opt/bin/
-RUN chmod +x /opt/bin/*
-ENV PATH=$PATH:/opt/bin/
+ADD . /opt/mutex-agent/
+RUN cd /opt/mutex-agent && \
+    pip install -r requirements.txt && \
+    python setup.py install
 WORKDIR /home/

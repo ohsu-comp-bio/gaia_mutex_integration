@@ -6,7 +6,7 @@ import json
 import google.protobuf.json_format
 import os
 
-import MR_pb2
+from . import MR_pb2
 
 
 def loadMessage(message):
