@@ -1,7 +1,17 @@
 syntax = "proto3";
 
+message Vector {
+    repeated int32 values = 1;
+    string label = 2;
+}
+
+message Matrix {
+    repeated Vector rows = 1;
+    repeated string header = 2;
+}
+
 message MutexRun {
-    string data_file = 1;
+    string matrix_url = 1;
     int32 max_group_size = 2;
     int32 first_level_random_iteration = 3;
     int32 second_level_random_iteration = 4;

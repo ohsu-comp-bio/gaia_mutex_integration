@@ -19,11 +19,87 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='MR.proto',
   package='',
   syntax='proto3',
-  serialized_pb=_b('\n\x08MR.proto\"\x9c\x03\n\x08MutexRun\x12\x11\n\tdata_file\x18\x01 \x01(\t\x12\x16\n\x0emax_group_size\x18\x02 \x01(\x05\x12$\n\x1c\x66irst_level_random_iteration\x18\x03 \x01(\x05\x12%\n\x1dsecond_level_random_iteration\x18\x04 \x01(\x05\x12\x12\n\nfdr_cutoff\x18\x05 \x01(\x02\x12\x14\n\x0cscore_cutoff\x18\x06 \x01(\x02\x12#\n\x1bsearch_on_signaling_network\x18\x07 \x01(\x08\x12*\n\"minimum_alteration_count_threshold\x18\x08 \x01(\x05\x12\x12\n\ngene_limit\x18\t \x01(\x05\x12\x12\n\ngenes_file\x18\n \x01(\t\x12\x19\n\x11gene_ranking_file\x18\x0b \x01(\t\x12\x14\n\x0cnetwork_file\x18\x0c \x01(\t\x12%\n\x1dsample_to_tissue_mapping_file\x18\r \x01(\t\x12\x1d\n\x15randomize_data_matrix\x18\x0e \x01(\x08\x62\x06proto3')
+  serialized_pb=_b('\n\x08MR.proto\"\'\n\x06Vector\x12\x0e\n\x06values\x18\x01 \x03(\x05\x12\r\n\x05label\x18\x02 \x01(\t\"/\n\x06Matrix\x12\x15\n\x04rows\x18\x01 \x03(\x0b\x32\x07.Vector\x12\x0e\n\x06header\x18\x02 \x03(\t\"\x9d\x03\n\x08MutexRun\x12\x12\n\nmatrix_url\x18\x01 \x01(\t\x12\x16\n\x0emax_group_size\x18\x02 \x01(\x05\x12$\n\x1c\x66irst_level_random_iteration\x18\x03 \x01(\x05\x12%\n\x1dsecond_level_random_iteration\x18\x04 \x01(\x05\x12\x12\n\nfdr_cutoff\x18\x05 \x01(\x02\x12\x14\n\x0cscore_cutoff\x18\x06 \x01(\x02\x12#\n\x1bsearch_on_signaling_network\x18\x07 \x01(\x08\x12*\n\"minimum_alteration_count_threshold\x18\x08 \x01(\x05\x12\x12\n\ngene_limit\x18\t \x01(\x05\x12\x12\n\ngenes_file\x18\n \x01(\t\x12\x19\n\x11gene_ranking_file\x18\x0b \x01(\t\x12\x14\n\x0cnetwork_file\x18\x0c \x01(\t\x12%\n\x1dsample_to_tissue_mapping_file\x18\r \x01(\t\x12\x1d\n\x15randomize_data_matrix\x18\x0e \x01(\x08\x62\x06proto3')
 )
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
+
+
+_VECTOR = _descriptor.Descriptor(
+  name='Vector',
+  full_name='Vector',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='values', full_name='Vector.values', index=0,
+      number=1, type=5, cpp_type=1, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='label', full_name='Vector.label', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=12,
+  serialized_end=51,
+)
+
+
+_MATRIX = _descriptor.Descriptor(
+  name='Matrix',
+  full_name='Matrix',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='rows', full_name='Matrix.rows', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='header', full_name='Matrix.header', index=1,
+      number=2, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=53,
+  serialized_end=100,
+)
 
 
 _MUTEXRUN = _descriptor.Descriptor(
@@ -34,7 +110,7 @@ _MUTEXRUN = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='data_file', full_name='MutexRun.data_file', index=0,
+      name='matrix_url', full_name='MutexRun.matrix_url', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -143,11 +219,28 @@ _MUTEXRUN = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=13,
-  serialized_end=425,
+  serialized_start=103,
+  serialized_end=516,
 )
 
+_MATRIX.fields_by_name['rows'].message_type = _VECTOR
+DESCRIPTOR.message_types_by_name['Vector'] = _VECTOR
+DESCRIPTOR.message_types_by_name['Matrix'] = _MATRIX
 DESCRIPTOR.message_types_by_name['MutexRun'] = _MUTEXRUN
+
+Vector = _reflection.GeneratedProtocolMessageType('Vector', (_message.Message,), dict(
+  DESCRIPTOR = _VECTOR,
+  __module__ = 'MR_pb2'
+  # @@protoc_insertion_point(class_scope:Vector)
+  ))
+_sym_db.RegisterMessage(Vector)
+
+Matrix = _reflection.GeneratedProtocolMessageType('Matrix', (_message.Message,), dict(
+  DESCRIPTOR = _MATRIX,
+  __module__ = 'MR_pb2'
+  # @@protoc_insertion_point(class_scope:Matrix)
+  ))
+_sym_db.RegisterMessage(Matrix)
 
 MutexRun = _reflection.GeneratedProtocolMessageType('MutexRun', (_message.Message,), dict(
   DESCRIPTOR = _MUTEXRUN,

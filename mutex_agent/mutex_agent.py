@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 from __future__ import print_function
 
 import argparse
@@ -8,9 +6,11 @@ import os
 import requests
 
 from . import parse_MRM
+from . import create_matrix
+from . import utils
 
 
-def formatTESMessage(params, storage_pre):
+def format_tes_message(mrm_pbo, storage_pre):
     cwd = os.path.dirname(os.path.realpath(__file__))
     task_message = {
         "name": "Mutex",
@@ -61,9 +61,8 @@ def formatTESMessage(params, storage_pre):
         ]
     }
 
-    filtered_params = dict((k, v) for k, v in params.iteritems() if v)
-
-    for k, v in filtered_params.items():
+    #can't iterate like this
+    for k, v in mrm_pbo.items():
         if k in ["data_file", "genes_file", "network_file"]:
             p = os.path.abspath(v)
             task_message["inputs"].append(
@@ -75,14 +74,14 @@ def formatTESMessage(params, storage_pre):
                 }
             )
             task_message["docker"][0]["cmd"].append(
-                ("--{0}").format(k.replace("_", "-"))
+                "--{0}".format(k.replace("_", "-"))
             )
             task_message["docker"][0]["cmd"].append(
-                ("/mnt/{0}").format(os.path.basename(p))
+                "/mnt/{0}".format(os.path.basename(p))
             )
         else:
             task_message["docker"][0]["cmd"].append(
-                ("--{0}").format(k.replace("_", "-"))
+                "--{0}".format(k.replace("_", "-"))
             )
             task_message["docker"][0]["cmd"].append(str(v))
 
@@ -108,30 +107,39 @@ def main():
                         type=str,
                         help="engine selection")
     parser.add_argument("--endpoint", "-e",
+                        default="localhost:8000",
                         type=str,
                         help="endpoint to submit mutex task to")
-    parser.add_argument("message")
+    parser.add_argument("--datapath", "-d",
+                        default="./DataMatrix.txt",
+                        type=str,
+                        help="data file path; default = ./DataMatrix.txt")
+    parser.add_argument("message",
+                        help="MR JSON message")
     args = parser.parse_args()
 
-    msg = parse_MRM.loadMessage(args.message)
-    if parse_MRM.validateMessage(msg):
+    mrm_pbo = parse_MRM.message_to_pbo(args.message)
+    mrm_dict = utils.pbo_to_dict(mrm_pbo)
+    mrm_dict['datapath'] = args.datapath
 
-        if args.mode == "tes":
-            tes_message = formatTESMessage(msg, "file://")
-            r = post_task(tes_message, args.endpoint)
-        elif args.mode == "cwl":
-            # cwl_inputs = formatCWLInputs(msg)
-            # r = post_task(cwl_desc, cwl_inputs)
-            raise NotImplementedError
+    if not os.path.exists(args.datapath):
 
-        if r.status_code // 100 != 2:
-            raise RuntimeError(
-                "[STATUS CODE - {0}] Failed to start Mutex: {1}".format(
-                    r.status_code, r.text
-                )
-            )
-        print(r.text)
-    else:
+        matrix_json = create_matrix.get_matrix_from_gaia(mrm_pbo.matrix_url)
+        matrix_pbo = create_matrix.convert_matrix_to_pb(matrix_json)
+        create_matrix.build_matrix_outfile(args.datapath, matrix_pbo)
+
+    if args.mode == "tes":
+        tes_message = format_tes_message(mrm_dict, "file://")
+        r = post_task(tes_message, args.endpoint)
+    elif args.mode == "cwl":
+        # cwl_inputs = formatCWLInputs(msg)
+        # r = post_task(cwl_desc, cwl_inputs)
+        raise NotImplementedError
+
+    if r.status_code // 100 != 2:
         raise RuntimeError(
-            "Error parsing message; check the message format against schema"
+            "[STATUS CODE - {0}] Failed to start Mutex: {1}".format(
+                r.status_code, r.text
+            )
         )
+    print(r.text)

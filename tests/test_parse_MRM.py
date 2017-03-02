@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
+import google.protobuf.json_format
+import json
 
 from mutex_agent import parse_MRM
 
@@ -8,7 +10,6 @@ from mutex_agent import parse_MRM
 class TestParseMRM(unittest.TestCase):
 
     good_mrm = {
-        "data_file": "/Users/strucka/Projects/gaia_mutex_integration/tests/resources/DataMatrix.txt",
         "max_group_size": 5,
         "first_level_random_iteration": 10000,
         "second_level_random_iteration": 100,
@@ -29,22 +30,17 @@ class TestParseMRM(unittest.TestCase):
         "fdr_cutoff": -1,
     }
 
-    good_json = '{"foo": "bar"}'
-
-    bad_json = '{"foo": "bar", bad: val}'
-
-    def testLoad(self):
+    def test_message_to_pbo(self):
         try:
-            parse_MRM.loadMessage(self.good_json)
+            parse_MRM.message_to_pbo(json.dumps(self.good_mrm))
         except Exception as ex:
             self.fail(
-                "loadMessage() raised ExceptionType: {0} unexpectedly!".format(type(ex).__name__)
+                "message_to_pbo() raised ExceptionType: {0} unexpectedly!".format(type(ex).__name__)
             )
 
-    def testLoadFails(self):
-        with self.assertRaises(RuntimeError):
-            parse_MRM.loadMessage(self.bad_json)
+    def test_message_to_pbo_fails(self):
+        with self.assertRaises(google.protobuf.json_format.ParseError):
+            parse_MRM.message_to_pbo(json.dumps(self.bad_mrm))
 
-    def testValidate(self):
-        self.assertTrue(parse_MRM.validateMessage(self.good_mrm))
-        self.assertFalse(parse_MRM.validateMessage(self.bad_mrm))
+    # def a test that looks for none or null values in parameters (TES won't handle them well)
+    # make new test files for other (non parse_MRM.py) files
