@@ -1,8 +1,1 @@
-{  
-  "matrix_url": "localhost:9000/matrix",
-  "max_group_size": 5,
-  "first_level_random_iteration": 10000,
-  "search_on_signaling_network": true,
-  "network_file": "/Users/strucka/Projects/gaia_mutex_integration/tests/resources/PC2v8.sif",
-  "gene_ranking_file": "/Users/strucka/Projects/gaia_mutex_integration/tests/resources/RankedGenes.txt"
-}
+{  "maxgroupsize": 5,  "generankingfile": "../resources/RankedGenes.txt",  "firstlevelrandomiteration": 10000,  "matrixurl": "rows=label+and+values&header=Special",  "searchonsignalingnetwork": true,  "genelimit": 500,  "networkfile": "../resources/PC2v8.sif"}

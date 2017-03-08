@@ -11,18 +11,18 @@ message Matrix {
 }
 
 message MutexRun {
-    string matrix_url = 1;
-    int32 max_group_size = 2;
-    int32 first_level_random_iteration = 3;
-    int32 second_level_random_iteration = 4;
-    float fdr_cutoff = 5;
-    float score_cutoff = 6;
-    bool search_on_signaling_network = 7;
-    int32 minimum_alteration_count_threshold = 8;
-    int32 gene_limit = 9;
-    string genes_file = 10;
-    string gene_ranking_file = 11;
-    string network_file = 12;
-    string sample_to_tissue_mapping_file = 13;
-    bool randomize_data_matrix = 14;
+    string matrixurl = 1;
+    int32 maxgroupsize = 2;
+    int32 firstlevelrandomiteration = 3;
+    int32 secondlevelrandomiteration = 4;
+    float fdrcutoff = 5;
+    float scorecutoff = 6;
+    bool searchonsignalingnetwork = 7;
+    int32 minimumalterationcountthreshold = 8;
+    int32 genelimit = 9;
+    string genesfile = 10;
+    string generankingfile = 11;
+    string networkfile = 12;
+    string sampletotissuemappingfile = 13;
+    bool randomizedatamatrix = 14;
 }

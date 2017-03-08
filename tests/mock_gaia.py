@@ -21,7 +21,7 @@ def get_matrix():
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("gaiamsg")
+    parser.add_argument("gaiamsg")  # MatM.json (generated with MRM_Maker.assign_mat_to_pb)
     args = parser.parse_args()
 
     infh = open(args.gaiamsg, "r")

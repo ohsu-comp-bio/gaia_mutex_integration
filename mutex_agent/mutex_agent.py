@@ -61,9 +61,15 @@ def format_tes_message(mrm_pbo, storage_pre):
         ]
     }
 
-    #can't iterate like this
-    for k, v in mrm_pbo.items():
+    for k in mrm_pbo.DESCRIPTOR.fields_by_name:
+
         if k in ["data_file", "genes_file", "network_file"]:
+            if k == "data_file":
+                v = mrm_pbo.data_file
+            if k == "genes_file":
+                v = mrm_pbo.genes_file
+            if k == "network_file":
+                v = mrm_pbo.network_file
             p = os.path.abspath(v)
             task_message["inputs"].append(
                 {
