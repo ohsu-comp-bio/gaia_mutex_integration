@@ -17,20 +17,30 @@ def convert_rg_to_json(infile):
         parts = line.split('\t')
         # allow for possibility that q-val column is not present in input file
         if count == 0:
+            assert parts[0] == "Score"
             if parts[1] == "q-val":
                 qexists = True
+                assert parts[2] == "Members"
             else:
                 qexists = False
+                assert parts[1] == "Members"
         else:
             ag = AlterationGroupSchema_pb2.AlterationGroup()
+            assert float(parts[0]) >= 0
+            assert float(parts[0]) <= 1
             ag.score = float(parts[0])
             if qexists:
+                assert float(parts[1]) >= 0
                 ag.q = float(parts[1])
+                assert len(parts[2:]) >= 2
                 ag.members.extend(parts[2:])
             else:
+                assert len(parts[1:]) >= 2
                 ag.members.extend(parts[1:])
             altgroups.append(ag)
+
         count += 1
+
     in_fh.close()
     return altgroups
 
@@ -46,7 +56,6 @@ def write_out_json(outfile, altg):
 
 
 def main():
-    # allow use of command line arguments for input and output files
     parser = argparse.ArgumentParser()
     parser.add_argument("-ranked-groups", "-r",
                         required=True,

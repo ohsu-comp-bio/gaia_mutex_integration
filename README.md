@@ -13,7 +13,7 @@ Mutex publication: https://genomebiology.biomedcentral.com/articles/10.1186/s130
 ## Mutex Agent Overview
 
 1. Gaia will provide a JSON message (called a Mutex Run Message) to parse-MRM.py.  
-2. parse-MRM.py will invoke a  run Mutex via an API call to either a TES or WES compliant service.  
+2. parse-MRM.py will invoke a Mutex run via an API call to either a TES or WES compliant service.
 3. Mutex will output ranked-groups.txt.  
 4. post-message.py will read-in ranked-groups.txt and output a multi-line ranked-groups JSON message.
 5. Gaia will receive this JSON message.
@@ -28,11 +28,11 @@ To compile the schema run:
 `bash bin/build-proto`
 
 ## Creating A Mutex Run Message (MRM) for MRM_Converter.py testing purposes:
-An example MRM is provided: test/MRM_DEVEL.txt.
+An example MRM is provided: tests/resources/MRM_DEVEL.json
   
-Or use create-MRM.py to generate a MRM from new parameters.txt and DataMatrix.txt files with the bash command:
+Or use src/create-MRM.py to generate a MRM from a new parameters.txt and a data matrix url. The data matrix url will be used to query Gaia which will return a data matrix .json file.
   
-`python create-MRM.py --inparam parameters.txt --inmat DataMatrix.txt -outf MRM.txt`
+`python src/create-MRM.py --ip tests/resources/parameters.txt --im tests/resources/DataMatrix.txt -mro MRM.json -mto MatM.json`
 
 ## Converting a MRM to be received by the Mutex agent:
 Example bash command:
@@ -52,7 +52,7 @@ Relevant files:
 
 The directory containing mutex.jar must also contain:
 - MR_pb2.py
-- MRM.txt or a substitute (like MRM_DEVEL.txt)
+- MRM.json or a substitute (like MRM_DEVEL.json)
 - resources/PC2v8.sif
 
 DataMatrix.txt, parameters.txt, and (after Mutex concludes) ranked-groups.txt will be placed in sample-input/. If sample-input/ does not yet exist it will be created.
@@ -60,7 +60,7 @@ DataMatrix.txt, parameters.txt, and (after Mutex concludes) ranked-groups.txt wi
 ## Converting Mutex output file (ranked-groups.txt) to Alteration Group Message (AGM):
 Example bash command:
   
-`python create-ARM.py --ranked-groups ranked-groups.txt --outfile ranked-groups.json`
+`python create_AGM.py --ranked-groups ranked-groups.txt --outfile ranked_groups.json`
   
 Relevant files:
   

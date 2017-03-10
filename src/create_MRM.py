@@ -6,7 +6,7 @@
 #   gaia would provide in response to a url query included in an MRM
 
 # example bash command
-# python gaia_mutex_integration/src/MRM_Maker.py -ip parameters.txt -im DataMatrix.txt -mro MRM_DEVEL.json -mto MatM_DEVEL.json
+# python src/create_MRM.py -ip parameters.txt -im DataMatrix.txt -mro MRM_DEVEL.json -mto MatM_DEVEL.json
 
 import argparse
 import google.protobuf.json_format
@@ -16,12 +16,17 @@ sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
 from mutex_agent import MR_pb2
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--inparam", "-ip")     # The parameters file to be converted
-parser.add_argument("--inmat", "-im")       # The data matrix file to be converted (for matrix json)
-parser.add_argument("-maturl", "-U",        # The url string to request the matrix from gaia (for mrm json)
-                    default='rows=label+and+values&header=Special') #a 100% fake placeholder URL
-parser.add_argument("--mrmoutf", "-mro")   # The desired name of the mrm json outfile
-parser.add_argument("--matoutf", "-mto")   # The desired name of the matrix json outfile
+parser.add_argument("--inparam", "-ip",
+                    help="The parameters file to be converted (for MRM). i.e. parameters.txt")
+parser.add_argument("--inmat", "-im",
+                    help="The data matrix file to be converted (for MatM). i.e. DataMatrix.txt")
+parser.add_argument("-maturl", "-U",
+                    default='rows=label+and+values&header=Special',  # a meaningless placeholder URL
+                    help="The url string to request the matrix from gaia (for MRM).")
+parser.add_argument("--mrmoutf", "-mro",
+                    help="The desired name of the MRM json outfile. i.e. MRM.json")
+parser.add_argument("--matoutf", "-mto",
+                    help="The desired name of the MatM json outfile. i.e. MatM.json")
 args = parser.parse_args()
 
 p_infile = args.inparam
@@ -29,10 +34,6 @@ m_infile = args.inmat
 mrm_outfile = args.mrmoutf
 mat_outfile = args.matoutf
 
-#initialize protobuf objects
-dmv = MR_pb2.Vector()
-dmm = MR_pb2.Matrix()
-mrm = MR_pb2.MutexRun()
 
 #mrmessage is MR_pb2.MutexRun() aka mrm
 def assign_param_to_pb(pinfl, mrmessage):
@@ -108,6 +109,11 @@ def write_pbo_to_json(outfile, message):
     outfh.close()
 
 if __name__ == '__main__':
+    # initialize protobuf objects
+    dmv = MR_pb2.Vector()
+    dmm = MR_pb2.Matrix()
+    mrm = MR_pb2.MutexRun()
+
     mrm = assign_param_to_pb(p_infile,mrm)
     dmm = assign_matrix_to_pb(m_infile,dmv,dmm)
     mrm.matrixurl = args.maturl
