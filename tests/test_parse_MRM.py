@@ -10,7 +10,7 @@ from mutex_agent import parse_MRM
 class TestParseMRM(unittest.TestCase):
 
     good_mrm = {
-        "matrixurl": "rows=label+and+values&header=Special",
+        "matrixurl": "http://localhost:9000/matrix",
         "maxgroupsize": 5,
         "firstlevelrandomiteration": 10000,
         "secondlevelrandomiteration": 100,

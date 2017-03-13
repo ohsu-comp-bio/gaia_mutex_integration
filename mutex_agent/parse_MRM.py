@@ -29,7 +29,8 @@ def message_to_pbo(message):
     return mrm_pbo
 
 
-# won't allow for i in mrm_pbo.DESCRIPTOR.fields_by_name:
+# won't allow:
+#  for i in mrm_pbo.DESCRIPTOR.fields_by_name:
 #   mrm_pbo.i ...
 #   ("mrm_pbo has no field i" )
 def assert_reqd_fields(mrm_pbo):

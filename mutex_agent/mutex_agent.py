@@ -10,7 +10,7 @@ from . import create_matrix
 from . import utils
 
 
-def format_tes_message(mrm_pbo, storage_pre):
+def format_tes_message(mrm_dict, storage_pre):
     cwd = os.path.dirname(os.path.realpath(__file__))
     task_message = {
         "name": "Mutex",
@@ -61,15 +61,9 @@ def format_tes_message(mrm_pbo, storage_pre):
         ]
     }
 
-    for k in mrm_pbo.DESCRIPTOR.fields_by_name:
-
-        if k in ["data_file", "genes_file", "network_file"]:
-            if k == "data_file":
-                v = mrm_pbo.data_file
-            if k == "genes_file":
-                v = mrm_pbo.genes_file
-            if k == "network_file":
-                v = mrm_pbo.network_file
+    for k in mrm_dict:
+        v = mrm_dict[k]
+        if k in ["datafile", "genesfile", "networkfile"]: # there is no datafile in the schema...what's the point of this?
             p = os.path.abspath(v)
             task_message["inputs"].append(
                 {
