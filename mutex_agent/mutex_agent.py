@@ -96,6 +96,8 @@ def post_task(message, endpoint):
         endpoint = endpoint[:-1]
 
     response = requests.post(endpoint, data=json.dumps(message))
+    response.raise_for_status() # uncomment this when it stops giving 405 errors for a functional outcome
+
     return response
 
 
