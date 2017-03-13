@@ -23,7 +23,7 @@ class TestCreateMatrix(unittest.TestCase):
             )
 
 
-    def test_get_matrix_from_gaia_fails(self)
+    def test_get_matrix_from_gaia_fails(self):
         with self.assertRaises(RuntimeError):
             create_matrix.get_matrix_from_gaia(self.bad_endpoint)
 

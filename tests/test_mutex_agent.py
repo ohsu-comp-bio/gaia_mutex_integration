@@ -28,8 +28,10 @@ class TestMutexAgent(unittest.TestCase):
     bad_mrm_pbo.scorecutoff = -1
     bad_mrm_pbo.fdrcutoff = -1
 
-    # is this what a bad storage_pre might look like?
     good_storage_pre = "file://"
+
+    # do we have to worry about bad storage_pres?
+    # should i add an assert statement to format_tes_message that makes sure they're good?
     bad_storage_pre = "bad"
 
     # wait until we know what a good/bad datapath will look like
@@ -51,18 +53,19 @@ class TestMutexAgent(unittest.TestCase):
                 "format_tes_message raised ExceptionType: {0} unexpectedly!".format(type(ex).__name__)
             )
 
-
+    # see note about bad storage_pre above
+    '''
     def test_format_tes_message_fails(self):
         with self.assertRaises(AssertionError):  #   What kind of error will this be?
             mutex_agent.format_tes_message(self.good_mrm_dict, self.bad_storage_pre)
-
-        #no bad_mrm_dict
-        '''
+    '''
+    #no bad_mrm_dict
+    '''
         with self.assertRaises(AssertionError):
             mutex_agent.format_tes_message(self.bad_mrm_dict, self.good_storage_pre)
         with self.assertRaises(AssertionError):
             mutex_agent.format_tes_message(self.bad_mrm_dict, self.bad_storage_pre)
-        '''
+    '''
 
     # with a good task message and good endpoint it's throwing 405 errors
     # uncomment this part when this problem is understood
