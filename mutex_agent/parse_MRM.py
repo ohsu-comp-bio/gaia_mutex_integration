@@ -29,28 +29,16 @@ def message_to_pbo(message):
     return mrm_pbo
 
 
-# won't allow:
-#  for i in mrm_pbo.DESCRIPTOR.fields_by_name:
-#   mrm_pbo.i ...
-#   ("mrm_pbo has no field i" )
 def assert_reqd_fields(mrm_pbo):
 
-    assert "matrixurl" and \
-           "maxgroupsize" and \
-           "firstlevelrandomiteration" and \
-           "searchonsignalingnetwork" in mrm_pbo.DESCRIPTOR.fields_by_name
+    reqd_fields = {'matrixurl': str,
+                   'maxgroupsize': int,
+                   'firstlevelrandomiteration': int,
+                   'searchonsignalingnetwork': bool}
 
-    for i in mrm_pbo.DESCRIPTOR.fields_by_name:
-        if i == "matrixurl":
-            assert type(mrm_pbo.matrixurl) is str
-            assert mrm_pbo.matrixurl != ''
-        if i == "maxgroupsize":
-            assert type(mrm_pbo.maxgroupsize) is int
-            assert mrm_pbo.maxgroupsize != (0 or 1)
-        if i == "firstlevelrandomiteration":
-            assert type(mrm_pbo.firstlevelrandomiteration) is int
-            assert mrm_pbo.firstlevelrandomiteration != 0
-        if i == "searchonsignalingnetwork":
-            assert type(mrm_pbo.searchonsignalingnetwork) is bool
-
-
+    for k, v in reqd_fields.items():
+        paramval = mrm_pbo.__getattribute__(k)
+        assert type(paramval) is v
+        assert paramval != ('' or 0)
+        if k == "maxgroupsize":
+            assert paramval != 1

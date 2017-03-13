@@ -3,6 +3,7 @@ import json
 
 
 def pbo_to_json(pbo):
+    assert len(pbo.ListFields()) != 0
     return google.protobuf.json_format.MessageToJson(pbo).replace('\n','')
 
 
