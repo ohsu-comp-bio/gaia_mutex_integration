@@ -57,7 +57,7 @@ def write_out_json(outfile, altg):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("-ranked-groups", "-r",
+    parser.add_argument("--ranked-groups", "-r",
                         required=True,
                         help="The ranked groups file to be converted")
     parser.add_argument("--outfile", "-o",

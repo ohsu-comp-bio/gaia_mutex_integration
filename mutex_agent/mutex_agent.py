@@ -95,7 +95,7 @@ def post_task(message, endpoint):
     if endpoint.endswith("/"):
         endpoint = endpoint[:-1]
 
-    response = requests.post(endpoint, data=json.dumps(message))
+    response = requests.post(endpoint, data=json.dumps(message)) #posts the TES message
     response.raise_for_status() # uncomment this when it stops giving 405 errors for a functional outcome
 
     return response
@@ -124,15 +124,15 @@ def main():
     mrm_dict = utils.pbo_to_dict(mrm_pbo)
     mrm_dict['datapath'] = args.datapath
 
-    if not os.path.exists(args.datapath):
+    if not os.path.exists(args.datapath): #if there isn't a DataMatrix.txt in this file, get it from mock_gaia
 
-        matrix_json = create_matrix.get_matrix_from_gaia(mrm_pbo.matrix_url)
+        matrix_json = create_matrix.get_matrix_from_gaia(mrm_pbo.matrixurl) # get the matrix from gaia
         matrix_pbo = create_matrix.convert_matrix_to_pb(matrix_json)
         create_matrix.build_matrix_outfile(args.datapath, matrix_pbo)
 
     if args.mode == "tes":
         tes_message = format_tes_message(mrm_dict, "file://")
-        r = post_task(tes_message, args.endpoint)
+        r = post_task(tes_message, args.endpoint) # post the message to TES API, TES shouldn't do anything with the endpoint, right?
     elif args.mode == "cwl":
         # cwl_inputs = formatCWLInputs(msg)
         # r = post_task(cwl_desc, cwl_inputs)
