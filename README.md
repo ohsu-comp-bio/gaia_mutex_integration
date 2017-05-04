@@ -43,7 +43,7 @@ Or use src/create-MRM.py to generate a MRM from a new parameters.txt and a data 
 ## Running the Mutex Agent
 Example bash command:
 
-`./bin/mutex-agent --mode tes --endpoint localhost:9000/matrix tests/resources/MRM_DEVEL.json`
+`./bin/mutex-agent --mode tes --endpoint localhost:8000/v1/jobs tests/resources/MRM_DEVEL.json`
 
   
 Relevant files:
@@ -70,7 +70,7 @@ DataMatrix.txt, parameters.txt, and (after Mutex concludes) ranked-groups.txt wi
 ## Converting Mutex output file (ranked-groups.txt) to Alteration Group Message (AGM):
 Example bash command:
 
-`./bin/create-AGM --ranked-groups tests/resources/ranked-groups.txt --outfile myrg.json`
+`./bin/create-AGM --ranked-groups tests/resources/ranked-groups.txt --outfile AGM.json`
   
 Relevant files:
   
