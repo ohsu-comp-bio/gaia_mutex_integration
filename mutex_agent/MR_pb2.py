@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='MR.proto',
   package='',
   syntax='proto3',
-  serialized_pb=_b('\n\x08MR.proto\"\'\n\x06Vector\x12\x0e\n\x06values\x18\x01 \x03(\x05\x12\r\n\x05label\x18\x02 \x01(\t\"/\n\x06Matrix\x12\x15\n\x04rows\x18\x01 \x03(\x0b\x32\x07.Vector\x12\x0e\n\x06header\x18\x02 \x03(\t\"\x81\x03\n\x08MutexRun\x12\x11\n\tmatrixurl\x18\x01 \x01(\t\x12\x14\n\x0cmaxgroupsize\x18\x02 \x01(\x05\x12!\n\x19\x66irstlevelrandomiteration\x18\x03 \x01(\x05\x12\"\n\x1asecondlevelrandomiteration\x18\x04 \x01(\x05\x12\x11\n\tfdrcutoff\x18\x05 \x01(\x02\x12\x13\n\x0bscorecutoff\x18\x06 \x01(\x02\x12 \n\x18searchonsignalingnetwork\x18\x07 \x01(\x08\x12\'\n\x1fminimumalterationcountthreshold\x18\x08 \x01(\x05\x12\x11\n\tgenelimit\x18\t \x01(\x05\x12\x11\n\tgenesfile\x18\n \x01(\t\x12\x17\n\x0fgenerankingfile\x18\x0b \x01(\t\x12\x13\n\x0bnetworkfile\x18\x0c \x01(\t\x12!\n\x19sampletotissuemappingfile\x18\r \x01(\t\x12\x1b\n\x13randomizedatamatrix\x18\x0e \x01(\x08\x62\x06proto3')
+  serialized_pb=_b('\n\x08MR.proto\"\'\n\x06Vector\x12\x0e\n\x06values\x18\x01 \x03(\x05\x12\r\n\x05label\x18\x02 \x01(\t\"/\n\x06Matrix\x12\x15\n\x04rows\x18\x01 \x03(\x0b\x32\x07.Vector\x12\x0e\n\x06header\x18\x02 \x03(\t\"\x9d\x03\n\x08MutexRun\x12\x12\n\nmatrix_url\x18\x01 \x01(\t\x12\x16\n\x0emax_group_size\x18\x02 \x01(\x05\x12$\n\x1c\x66irst_level_random_iteration\x18\x03 \x01(\x05\x12%\n\x1dsecond_level_random_iteration\x18\x04 \x01(\x05\x12\x12\n\nfdr_cutoff\x18\x05 \x01(\x02\x12\x14\n\x0cscore_cutoff\x18\x06 \x01(\x02\x12#\n\x1bsearch_on_signaling_network\x18\x07 \x01(\x08\x12*\n\"minimum_alteration_count_threshold\x18\x08 \x01(\x05\x12\x12\n\ngene_limit\x18\t \x01(\x05\x12\x12\n\ngenes_file\x18\n \x01(\t\x12\x19\n\x11gene_ranking_file\x18\x0b \x01(\t\x12\x14\n\x0cnetwork_file\x18\x0c \x01(\t\x12%\n\x1dsample_to_tissue_mapping_file\x18\r \x01(\t\x12\x1d\n\x15randomize_data_matrix\x18\x0e \x01(\x08\x62\x06proto3')
 )
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -110,98 +110,98 @@ _MUTEXRUN = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='matrixurl', full_name='MutexRun.matrixurl', index=0,
+      name='matrix_url', full_name='MutexRun.matrix_url', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='maxgroupsize', full_name='MutexRun.maxgroupsize', index=1,
+      name='max_group_size', full_name='MutexRun.max_group_size', index=1,
       number=2, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='firstlevelrandomiteration', full_name='MutexRun.firstlevelrandomiteration', index=2,
+      name='first_level_random_iteration', full_name='MutexRun.first_level_random_iteration', index=2,
       number=3, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='secondlevelrandomiteration', full_name='MutexRun.secondlevelrandomiteration', index=3,
+      name='second_level_random_iteration', full_name='MutexRun.second_level_random_iteration', index=3,
       number=4, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='fdrcutoff', full_name='MutexRun.fdrcutoff', index=4,
+      name='fdr_cutoff', full_name='MutexRun.fdr_cutoff', index=4,
       number=5, type=2, cpp_type=6, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='scorecutoff', full_name='MutexRun.scorecutoff', index=5,
+      name='score_cutoff', full_name='MutexRun.score_cutoff', index=5,
       number=6, type=2, cpp_type=6, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='searchonsignalingnetwork', full_name='MutexRun.searchonsignalingnetwork', index=6,
+      name='search_on_signaling_network', full_name='MutexRun.search_on_signaling_network', index=6,
       number=7, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='minimumalterationcountthreshold', full_name='MutexRun.minimumalterationcountthreshold', index=7,
+      name='minimum_alteration_count_threshold', full_name='MutexRun.minimum_alteration_count_threshold', index=7,
       number=8, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='genelimit', full_name='MutexRun.genelimit', index=8,
+      name='gene_limit', full_name='MutexRun.gene_limit', index=8,
       number=9, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='genesfile', full_name='MutexRun.genesfile', index=9,
+      name='genes_file', full_name='MutexRun.genes_file', index=9,
       number=10, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='generankingfile', full_name='MutexRun.generankingfile', index=10,
+      name='gene_ranking_file', full_name='MutexRun.gene_ranking_file', index=10,
       number=11, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='networkfile', full_name='MutexRun.networkfile', index=11,
+      name='network_file', full_name='MutexRun.network_file', index=11,
       number=12, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='sampletotissuemappingfile', full_name='MutexRun.sampletotissuemappingfile', index=12,
+      name='sample_to_tissue_mapping_file', full_name='MutexRun.sample_to_tissue_mapping_file', index=12,
       number=13, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='randomizedatamatrix', full_name='MutexRun.randomizedatamatrix', index=13,
+      name='randomize_data_matrix', full_name='MutexRun.randomize_data_matrix', index=13,
       number=14, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
@@ -220,7 +220,7 @@ _MUTEXRUN = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=103,
-  serialized_end=488,
+  serialized_end=516,
 )
 
 _MATRIX.fields_by_name['rows'].message_type = _VECTOR

@@ -4,6 +4,7 @@ import argparse
 import json
 import os
 import requests
+import uuid
 
 from . import parse_MRM
 from . import create_matrix
@@ -17,45 +18,38 @@ def format_tes_message(mrm_dict, storage_pre):
         "inputs": [],
         "outputs": [
             {
-                "location": storage_pre + os.path.join(cwd, "tests", "ranked_groups.txt"),
-                "class": "File",
+                "url": storage_pre + os.path.join(cwd, "tests", "ranked_groups.txt"),
                 "path": "/mnt/ranked-groups.txt"
             },
             {
-                "location": storage_pre + os.path.join(cwd, "tests", "AGM.json"),
-                "class": "File",
+                "url": storage_pre + os.path.join(cwd, "tests", "AGM.json"),
                 "path": "/mnt/AGM.json"
             }
         ],
         "resources": {
-            "minimumCpuCores": 1,
-            "minimumRamGb": 8,
-            "volumes": [{
-                "name": "work-dir",
-                "sizeGb": 5,
-                "mountPoint": "/mnt"
-            }]
+            "cpu_cores": 1,
+            "ram_gb": 8
         },
-        "docker": [
+        "executors": [
             {
-                "imageName": "opengenomics/mutex:v1.0",
+                "image_name": "opengenomics/mutex:v1.0.2",
                 "cmd": [
                     "mutex.py"
                 ],
                 "workdir": "/mnt",
                 "stdout": "stdout",
-                "stderr": "stderr",
+                "stderr": "stderr"
             },
             {
-                "imageName": "mutex_agent:v0.1",
+                "image_name": "mutex_agent:v0.1",
                 "cmd": [
                     "create_AGM.py",
                     "--ranked-groups", "/mnt/ranked-groups.txt",
                     "--outfile", "/mnt/AGM.json"
                 ],
-                "Workdird": "/mnt",
+                "workdir": "/mnt",
                 "stdout": "stdout",
-                "stderr": "stderr",
+                "stderr": "stderr"
             }
 
         ]
@@ -63,31 +57,31 @@ def format_tes_message(mrm_dict, storage_pre):
 
     for k in mrm_dict:
         v = mrm_dict[k]
-        if k in ["datafile", "genesfile", "networkfile"]: # there is no datafile in the schema...what's the point of this?
+        subdir = uuid.uuid4()
+        if k in ["data_file", "genes_file", "network_file"]:
             p = os.path.abspath(v)
             task_message["inputs"].append(
                 {
                     "name": k,
-                    "location": storage_pre + p,
-                    "class": "File",
-                    "path": "/mnt/{0}".format(os.path.basename(p))
+                    "url": storage_pre + p,
+                    "path": "/mnt/{0}/{1}".format(subdir, os.path.basename(p))
                 }
             )
-            task_message["docker"][0]["cmd"].append(
+            task_message["executors"][0]["cmd"].append(
                 "--{0}".format(k.replace("_", "-"))
             )
-            task_message["docker"][0]["cmd"].append(
+            task_message["executors"][0]["cmd"].append(
                 "/mnt/{0}".format(os.path.basename(p))
             )
         else:
-            task_message["docker"][0]["cmd"].append(
+            task_message["executors"][0]["cmd"].append(
                 "--{0}".format(k.replace("_", "-"))
             )
-            task_message["docker"][0]["cmd"].append(str(v))
+            task_message["executors"][0]["cmd"].append(str(v))
 
     return task_message
 
-
+# post the task to TES
 def post_task(message, endpoint):
     if not endpoint.startswith("http"):
         endpoint = "http://" + endpoint
@@ -95,8 +89,8 @@ def post_task(message, endpoint):
     if endpoint.endswith("/"):
         endpoint = endpoint[:-1]
 
-    response = requests.post(endpoint, data=json.dumps(message)) #posts the TES message
-    response.raise_for_status() # uncomment this when it stops giving 405 errors for a functional outcome
+    response = requests.post(endpoint, data=json.dumps(message))
+    #response.raise_for_status()
 
     return response
 
@@ -112,7 +106,7 @@ def main():
                         default="localhost:8000",
                         type=str,
                         help="endpoint to submit mutex task to")
-    parser.add_argument("--datapath", "-d",
+    parser.add_argument("--data-file", "-d",
                         default="./DataMatrix.txt",
                         type=str,
                         help="data file path; default = ./DataMatrix.txt")
@@ -120,24 +114,33 @@ def main():
                         help="MR JSON message")
     args = parser.parse_args()
 
+    # convert json message to pbo, to dict, add path to datamatrix if available
     mrm_pbo = parse_MRM.message_to_pbo(args.message)
     mrm_dict = utils.pbo_to_dict(mrm_pbo)
-    mrm_dict['datapath'] = args.datapath
+    mrm_dict['data_file'] = args.data_file
 
-    if not os.path.exists(args.datapath): #if there isn't a DataMatrix.txt in this file, get it from mock_gaia
+    # if there isn't a DataMatrix.txt in this file, get it as a message from mock_gaia
+    # compose the matrix
+    if not os.path.exists(args.data_file):
 
-        matrix_json = create_matrix.get_matrix_from_gaia(mrm_pbo.matrixurl) # get the matrix from gaia
+        matrix_json = create_matrix.get_matrix_from_gaia(mrm_dict['matrix_url'])
         matrix_pbo = create_matrix.convert_matrix_to_pb(matrix_json)
-        create_matrix.build_matrix_outfile(args.datapath, matrix_pbo)
+        create_matrix.build_matrix_outfile(args.data_file, matrix_pbo)
 
+    # remove this later
+    del mrm_dict['matrix_url']
+
+    # post message to TES, TES should initiate docker process that starts Mutex
+    # Mutex should output ranked-groups.txt in sample-input
     if args.mode == "tes":
         tes_message = format_tes_message(mrm_dict, "file://")
-        r = post_task(tes_message, args.endpoint) # post the message to TES API, TES shouldn't do anything with the endpoint, right?
+        r = post_task(tes_message, args.endpoint)
     elif args.mode == "cwl":
         # cwl_inputs = formatCWLInputs(msg)
         # r = post_task(cwl_desc, cwl_inputs)
         raise NotImplementedError
 
+    # TODO: "monkey business"
     if r.status_code // 100 != 2:
         raise RuntimeError(
             "[STATUS CODE - {0}] Failed to start Mutex: {1}".format(
