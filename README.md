@@ -43,7 +43,7 @@ Or use src/create-MRM.py to generate a MRM from a new parameters.txt and a data 
 ## Running the Mutex Agent
 Example bash command:
 
-`./bin/mutex-agent --mode tes --endpoint localhost:8000/v1/jobs tests/resources/MRM_DEVEL.json`
+`./bin/mutex-agent --mode tes --endpoint localhost:8000/v1/tasks tests/resources/MRM_DEVEL.json`
 
   
 Relevant files:

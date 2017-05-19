@@ -12,6 +12,7 @@ from . import utils
 
 def format_tes_message(mrm_dict, storage_pre):
     cwd = os.path.dirname(os.path.realpath(__file__))
+    # TODO: Make the output urls configurable
     task_message = {
         "name": "Mutex",
         "inputs": [],
@@ -56,7 +57,7 @@ def format_tes_message(mrm_dict, storage_pre):
 
     for k in mrm_dict:
         v = mrm_dict[k]
-        if k in ["data_file", "genes_file", "network_file"]:
+        if k in ["data_file", "genes_file", "gene_ranking_file", "sample_to_tissue_mapping_file", "network_file"]:
             p = os.path.abspath(v)
             task_message["inputs"].append(
                 {

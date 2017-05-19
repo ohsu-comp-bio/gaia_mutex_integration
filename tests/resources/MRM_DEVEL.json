@@ -1,1 +1,16 @@
-{  "maxgroupsize": 5,  "generankingfile": "/Users/manningh/PycharmProjects/BMEG_and_Mutex/gaia_mutex_integration/tests/resources/RankedGenes.txt",  "firstlevelrandomiteration": 10000,  "matrixurl": "localhost:9000/matrix",  "searchonsignalingnetwork": true,  "genelimit": 500,  "networkfile": "/Users/manningh/PycharmProjects/BMEG_and_Mutex/gaia_mutex_integration/tests/resources//PC2v8.sif"}
+{
+  "matrix_url": "localhost:9000/matrix",
+  "max_group_size": 5,
+  "first_level_random_iteration": 10000,
+  "second_level_random_iteration": 100,
+  "search_on_signaling_network": true,
+  "network_file": "/Users/manningh/PycharmProjects/BMEG_and_Mutex/gaia_mutex_integration/tests/resources/PC2v8.sif",
+  "genes_file": null,
+  "gene_ranking_file": "/Users/manningh/PycharmProjects/BMEG_and_Mutex/gaia_mutex_integration/tests/resources/RankedGenes.txt",
+  "gene_limit": null,
+  "score_cutoff": -1,
+  "fdr_cutoff": -1,
+  "sample_to_tissue_mapping_file": null,
+  "minimum_alteration_count_threshold": null,
+  "randomize_data_matrix": false
+}

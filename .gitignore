@@ -4,3 +4,4 @@ build/
 *.egg_info/
 /__pycache__
 *.pyc
+.coverage
