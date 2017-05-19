@@ -4,7 +4,6 @@ import argparse
 import json
 import os
 import requests
-import uuid
 
 from . import parse_MRM
 from . import create_matrix
@@ -32,7 +31,7 @@ def format_tes_message(mrm_dict, storage_pre):
         },
         "executors": [
             {
-                "image_name": "opengenomics/mutex:v1.0.2",
+                "image_name": "opengenomics/mutex:latest",
                 "cmd": [
                     "mutex.py"
                 ],
@@ -57,14 +56,13 @@ def format_tes_message(mrm_dict, storage_pre):
 
     for k in mrm_dict:
         v = mrm_dict[k]
-        subdir = uuid.uuid4()
         if k in ["data_file", "genes_file", "network_file"]:
             p = os.path.abspath(v)
             task_message["inputs"].append(
                 {
                     "name": k,
                     "url": storage_pre + p,
-                    "path": "/mnt/{0}/{1}".format(subdir, os.path.basename(p))
+                    "path": "/mnt/{0}".format(os.path.basename(p))
                 }
             )
             task_message["executors"][0]["cmd"].append(
@@ -103,7 +101,7 @@ def main():
                         type=str,
                         help="engine selection")
     parser.add_argument("--endpoint", "-e",
-                        default="localhost:8000",
+                        default="localhost:8000/v1/tasks",
                         type=str,
                         help="endpoint to submit mutex task to")
     parser.add_argument("--data-file", "-d",
